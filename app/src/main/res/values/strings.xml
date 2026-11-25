@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hello APK</string>
+    <string name="subtitle">Минимальный шаблон на Kotlin.\nДальше добавляем нужные экраны и логику.</string>
+    <string name="counter_zero">Нажатий: 0</string>
+    <string name="counter_format">Нажатий: %1$d</string>
+    <string name="button_tap">Нажать</string>
+    <string name="toast_enough">Отлично, 10 нажатий!</string>
+</resources>
