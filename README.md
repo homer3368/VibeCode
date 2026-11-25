@@ -61,6 +61,8 @@ HelloApk/
 ├── gradle.properties            # JVM-память, AndroidX
 ├── local.properties             # путь к Android SDK (не коммитить в git)
 ├── build.cmd                    # сборка одной командой
+├── publish.cmd                  # сборка + коммит + push в GitHub
+├── .gitignore                   # что не попадает в репозиторий
 └── app/
     ├── build.gradle.kts         # namespace, sdk-версии, зависимости
     └── src/main/
@@ -109,3 +111,60 @@ HelloApk/
 
 `JAVA_HOME`, `ANDROID_HOME`, `ANDROID_SDK_ROOT` прописаны в переменные окружения
 пользователя, так что новые терминалы их подхватят.
+
+
+## Git / GitHub
+
+Проект уже в репозитории: **https://github.com/homer3368/VibeCode** (ветка `main`).
+Первый коммит `Initial commit: minimal Kotlin Android app (Hello APK)` запушен.
+Локальная конфигурация: `user.name = homer3368`,
+`user.email = homer3368@users.noreply.github.com`.
+
+Если хотите, чтобы коммиты привязывались к профилю GitHub по вашей основной почте
+(она должна быть добавлена в GitHub → Settings → Emails):
+
+```
+"C:\Program Files\Git\cmd\git.exe" config user.email "ваша-почта@example.com"
+```
+
+### Опубликовать изменения одной командой
+
+```
+publish.cmd "что изменил"
+```
+
+Скрипт соберёт APK, обновит `HelloApk-debug.apk`, сделает коммит и запушит в `origin/main`.
+Если сборка упала — коммита не будет.
+
+### Обычные команды
+
+`git.exe` лежит в `C:\Program Files\Git\cmd`; в новых терминалах он уже в PATH.
+
+```
+git status
+git add -A
+git commit -m "message"
+git push
+git pull
+```
+
+### Что попадает в репозиторий
+
+| В репозитории | Игнорируется (`.gitignore`) |
+| --- | --- |
+| `app/src`, gradle-скрипты, `gradle/wrapper`, `gradlew`, `README.md` | `app/build/` |
+| `gradle-wrapper.jar` (нужен для сборки на чистой машине) | `.gradle/` |
+| `HelloApk-debug.apk` (готовый APK для скачивания с GitHub) | `local.properties` (локальный путь к SDK) |
+| `build.cmd`, `publish.cmd` | `.idea/` |
+
+`local.properties` не коммитится намеренно: путь к Android SDK у каждой машины свой,
+Android Studio создаёт этот файл сама.
+
+### Авторизация
+
+Используется **Git Credential Manager** (идёт вместе с Git for Windows): токен хранится
+в Windows Credential Manager, в файлах проекта его нет. Если нужно войти заново:
+
+```
+git credential-manager github login
+```
